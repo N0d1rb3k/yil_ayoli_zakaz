@@ -1,14 +1,7 @@
-@extends('layouts.app')
+@extends('layouts.layout')
 
 @section('content')
 
-    <nav>
-        <a href="{{ route('qizlar.index') }}">Qizlar</a>
-
-        <a href="#">Yutuqlar</a>
-        <a href="#">Ovoz berish</a>
-        <a href="#">Aloqa</a>
-    </nav>
 
     <header>
         <h1>🌸 Yil Ayoli — Ilhom manbai bo‘lgan qizlar 🌸</h1>
@@ -34,8 +27,6 @@
         </div>
     </section>
 
-    <footer>
-        <p>© 2025 “Yil Ayoli” loyihasi. Barcha huquqlar himoyalangan.</p>
-    </footer>
+
 
 @endsection
