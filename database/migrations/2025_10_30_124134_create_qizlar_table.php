@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('qizlar', function (Blueprint $table) {
             $table->id();
             $table->string('fio');
-            $table->integer('yoshi');
-            $table->string('sinfi');
+            $table->integer('yoshi')->nullable();
+            $table->string('sinfi')->nullable();
             $table->string('rasmi')->nullable();
-            $table->string('manzili');
+            $table->string('manzili')->nullable();
             $table->timestamps();
         });
     }
