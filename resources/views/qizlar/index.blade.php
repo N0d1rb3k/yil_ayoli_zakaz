@@ -25,12 +25,19 @@
                     <p><strong>Yoshi:</strong> {{ $qiz->yoshi }}</p>
                     <p><strong>Yashash manzili:</strong> {{ $qiz->manzili }}</p>
                     <p><strong>Ovozlar:</strong> {{ $qiz->ovoz }}</p>
-                        @auth()
-                            <button type="button" id="edit_btn" onclick="window.location='{{ route('qizlar.edit', $qiz->id) }}'">
-                                ✏️ Tahrirlash
+                        @auth
+                            <button type="button" class="edit-btn" onclick="window.location='{{ route('qizlar.edit', $qiz->id) }}'">
+                                Tahrirlash
                             </button>
+                            <form action="{{ route('qizlar.destroy', $qiz) }}" method="post" style="display:inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="delete-btn" onclick="return confirm('Rostdan o‘chirmoqchimisiz?')">
+                                    O‘chirish
+                                </button>
+                            </form>
+                        @endauth
 
-                        @endauth()
                 </div>
             @endforeach
         </div>
@@ -38,7 +45,6 @@
 @endsection()
 
 <style>
-
     /* 🌸 Page Wrapper */
     .qizlar-page {
         max-width: 1000px;
@@ -47,7 +53,7 @@
         font-family: "Poppins", sans-serif;
     }
 
-    /* 🌸 Title */
+    /* 🌸 Page Title */
     .qizlar-page h2 {
         text-align: center;
         color: #b31f6f;
@@ -55,7 +61,7 @@
         margin-bottom: 2rem;
     }
 
-    /* 🌸 Success message */
+    /* 🌸 Success Message */
     .success-message {
         text-align: center;
         color: green;
@@ -66,14 +72,14 @@
         box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
     }
 
-    /* 🌸 Qizlar list container */
+    /* 🌸 Cards Container */
     .qizlar-list {
         display: grid;
         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         gap: 1.5rem;
     }
 
-    /* 🌸 Qiz card */
+    /* 🌸 Individual Card */
     .qiz-card {
         background: #fff;
         border-radius: 18px;
@@ -88,7 +94,7 @@
         box-shadow: 0 8px 22px rgba(139, 0, 93, 0.15);
     }
 
-    /* 🌸 Image */
+    /* 🌸 Card Image */
     .qiz-card img {
         width: 100%;
         height: 230px;
@@ -97,7 +103,7 @@
         margin-bottom: 1rem;
     }
 
-    /* 🌸 Info text */
+    /* 🌸 Card Info */
     .qiz-card h3 {
         color: #8b005d;
         margin-bottom: 0.5rem;
@@ -124,18 +130,25 @@
         border-radius: 3px;
     }
 
-    /* 🌸 Edit button */
-    .edit-btn {
+    /* 🌸 Buttons Container */
+    .qiz-card form,
+    .qiz-card .edit-btn {
         display: inline-block;
+    }
+
+    /* 🌸 Edit Button */
+    /* 🌸 Edit Button */
+    .edit-btn {
         background: linear-gradient(135deg, #d63384, #b31f6f);
         color: #fff;
         border: none;
         border-radius: 12px;
-        padding: 10px 16px;
+        padding: 8px 16px;
         font-size: 0.95rem;
         font-weight: 600;
         cursor: pointer;
         margin-top: 0.8rem;
+        margin-right: 0.5rem;
         transition: all 0.3s ease;
         box-shadow: 0 3px 8px rgba(179, 31, 111, 0.15);
     }
@@ -143,15 +156,29 @@
     .edit-btn:hover {
         background: linear-gradient(135deg, #b31f6f, #d63384);
         transform: translateY(-2px);
-        box-shadow: 0 5px 14px rgba(179, 31, 111, 0.25);
     }
 
-    .edit-btn:active {
-        transform: translateY(0);
-        box-shadow: 0 2px 6px rgba(179, 31, 111, 0.2);
+    /* 🌸 Delete Button */
+    .delete-btn {
+        background: linear-gradient(135deg, #ff4d4f, #d9363e);
+        color: #fff;
+        border: none;
+        border-radius: 12px;
+        padding: 8px 16px;
+        font-size: 0.95rem;
+        font-weight: 600;
+        cursor: pointer;
+        margin-top: 0.8rem;
+        transition: all 0.3s ease;
+        box-shadow: 0 3px 8px rgba(217, 54, 62, 0.15);
     }
 
-    /* 🌸 Responsive tweaks */
+    .delete-btn:hover {
+        background: linear-gradient(135deg, #d9363e, #ff4d4f);
+        transform: translateY(-2px);
+    }
+
+    /* 🌸 Responsive Adjustments */
     @media (max-width: 600px) {
         .qiz-card img {
             height: 180px;
@@ -160,8 +187,12 @@
         .qiz-card {
             padding: 1rem;
         }
-    }
 
+        .edit-btn, .delete-btn {
+            width: 48%;
+            margin-top: 0.5rem;
+        }
+    }
 
 </style>
 

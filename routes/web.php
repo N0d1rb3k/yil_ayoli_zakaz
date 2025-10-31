@@ -10,6 +10,7 @@ Route::resource('qizlar', QizController::class)->except('create','edit','show','
 Route::get('/create/qiz', [QizController::class, 'create'])->name('qizlar.create');
 Route::get('/edit/{qiz}', [QizController::class, 'edit'])->name('qizlar.edit');
 Route::put('/update/{qiz}', [QizController::class, 'update'])->name('qizlar.update');
+Route::delete('/delete/{qiz}', [QizController::class, 'destroy'])->name('qizlar.destroy');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

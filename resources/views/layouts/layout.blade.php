@@ -15,7 +15,6 @@
     <a href="{{ route('home') }}">Bosh sahifa</a>
     <a href="{{ route('qizlar.index') }}">Qizlar</a>
     <a href="#">Yutuqlar</a>
-    <a href="#">Ovoz berish</a>
     <a href="#">Aloqa</a>
     @auth()
         <a href="{{ route('qizlar.create') }}">ro'yxatga olish</a>
