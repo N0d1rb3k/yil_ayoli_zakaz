@@ -1,29 +1,57 @@
-    @extends('layouts.layout')
+@extends('layouts.layout')
 
-    @section('content')
-        <h2>ma’lumotlarini tahrirlash</h2>
+@section('content')
+    <div class="container">
+        <h2>{{ $qiz->fio }} maʼlumotlarini tahrirlash</h2>
 
         <form action="{{ route('qizlar.update', $qiz) }}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
 
-            <label>FIO:</label><br>
-            <input type="text" name="fio" value="{{ old('fio', $qiz->fio) }}" required><br><br>
+            <div class="mb-3">
+                <label class="form-label">F.I.O</label>
+                <input type="text" name="fio" class="form-control" value="{{ old('fio', $qiz->fio) }}" required>
+            </div>
 
-            <label>Sinf:</label><br>
-            <input type="text" name="sinfi" value="{{ old('sinfi', $qiz->sinfi) }}"><br><br>
+            <div class="mb-3">
+                <label class="form-label">Yoshi</label>
+                <input type="number" name="yoshi" class="form-control" value="{{ old('yoshi', $qiz->yoshi) }}">
+            </div>
 
-            <label>Yosh:</label><br>
-            <input type="text" name="yoshi" value="{{ old('yoshi', $qiz->yoshi) }}"><br><br>
+            <div class="mb-3">
+                <label class="form-label">Sinf</label>
+                <input type="text" name="sinfi" class="form-control" value="{{ old('sinfi', $qiz->sinfi) }}">
+            </div>
 
-            <label>Rasm (agar o‘zgartirmoqchi bo‘lsangiz):</label><br>
-            <input type="file" name="rasmi"><br><br>
+            @auth
+                <div class="mb-3">
+                    <label class="form-label">Telefon raqami</label>
+                    <input type="text" name="telefon_raqami" class="form-control" value="{{ old('telefon_raqami', $qiz->telefon_raqami) }}">
+                </div>
 
-            <button type="submit">Yangilash</button>
+                <div class="mb-3">
+                    <label class="form-label">Manzili</label>
+                    <input type="text" name="mazili" class="form-control" value="{{ old('mazili', $qiz->mazili) }}">
+                </div>
+            @endauth
+
+            <div class="mb-3">
+                <label class="form-label">Rasm</label><br>
+
+                @if($qiz->rasmi)
+                    <img src="{{ asset('storage/'.$qiz->rasmi) }}" width="100" class="mb-2">
+                @endif
+
+                <input type="file" name="rasmi" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-success">Yangilash</button>
         </form>
-@endsection()
+    </div>
+@endsection
 
-    <style>
+
+<style>
         /* 🌸 General page styling */
         body {
             font-family: "Poppins", sans-serif;

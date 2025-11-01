@@ -2,16 +2,16 @@
 
 @section('title', 'Qizlar ro‘yxati')
 
-
 @section('content')
     <div class="qizlar-page">
         <h2>🌸 Qizlar ro‘yxati 🌸</h2>
+
         <form method="GET" action="{{ route('qizlar.index') }}" class="mb-3 d-flex">
             <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control me-2" placeholder="Qizlarni qidirish...">
             <button type="submit" class="btn btn-primary">Qidirish</button>
         </form>
 
-    @if(session('success'))
+        @if(session('success'))
             <p class="success-message">{{ session('success') }}</p>
         @endif
 
@@ -23,27 +23,37 @@
                     @else
                         <img src="{{ asset('/images/default.jpg') }}" alt="No Image">
                     @endif
+
                     <h3><strong>FIO:</strong> {{ $qiz->fio }}</h3>
                     <p><strong>Sinf:</strong> {{ $qiz->sinfi }}</p>
                     <p><strong>Yoshi:</strong> {{ $qiz->yoshi }}</p>
-                        @auth
-                            <button type="button" class="edit-btn" onclick="window.location='{{ route('qizlar.edit', $qiz->id) }}'">
-                                Tahrirlash
+
+                    {{-- 🔐 Shaxsiy ma'lumotlar faqat auth foydalanuvchi uchun --}}
+                    @auth
+                        <p><strong>Telefon:</strong> {{ $qiz->telefon_raqami }}</p>
+                        <p><strong>Manzil:</strong> {{ $qiz->mazili }}</p>
+                    @endauth
+
+                    @auth
+                        <button type="button" class="edit-btn" onclick="window.location='{{ route('qizlar.edit', $qiz->id) }}'">
+                            Tahrirlash
+                        </button>
+
+                        <form action="{{ route('qizlar.destroy', $qiz) }}" method="post" style="display:inline;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="delete-btn" onclick="return confirm('Rostdan o‘chirmoqchimisiz?')">
+                                O‘chirish
                             </button>
-                            <form action="{{ route('qizlar.destroy', $qiz) }}" method="post" style="display:inline;">
-                                @csrf
-                                @method('DELETE')
-                                <button type="submit" class="delete-btn" onclick="return confirm('Rostdan o‘chirmoqchimisiz?')">
-                                    O‘chirish
-                                </button>
-                            </form>
-                        @endauth
+                        </form>
+                    @endauth
 
                 </div>
             @endforeach
         </div>
     </div>
-@endsection()
+@endsection
+
 
 <style>
     /* 🌸 Page Wrapper */

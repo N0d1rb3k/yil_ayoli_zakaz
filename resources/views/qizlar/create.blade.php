@@ -1,26 +1,49 @@
 @extends('layouts.layout')
 
 @section('content')
+    <div class="container">
+        <h1>Malumotlarni Qo‘shish</h1>
 
-    <h1><bold>Ro`yxatga olish</bold></h1>
-    <form action="{{ route('qizlar.store') }}" method="POST" enctype="multipart/form-data">
-        @csrf
-        <label>FIO:</label><br>
-        <input type="text" name="fio" required><br><br>
+        <form action="{{ route('qizlar.store') }}" method="POST" enctype="multipart/form-data">
+            @csrf
 
-        <label>Sinf:</label><br>
-        <input type="text" name="sinfi"><br><br>
+            <div class="mb-3">
+                <label class="form-label">F.I.O</label>
+                <input type="text" name="fio" class="form-control" value="{{ old('fio') }}" required>
+            </div>
 
-        <label>Yosh:</label><br>
-        <input type="text" name="yoshi"><br><br>
+            <div class="mb-3">
+                <label class="form-label">Yoshi</label>
+                <input type="number" name="yoshi" class="form-control" value="{{ old('yoshi') }}">
+            </div>
 
-        <label>Rasm:</label><br>
-        <input type="file" name="rasmi"><br><br>
+            <div class="mb-3">
+                <label class="form-label">Sinf</label>
+                <input type="text" name="sinfi" class="form-control" value="{{ old('sinfi') }}" placeholder="Masalan: 7-A">
+            </div>
 
+            @auth  {{-- Faqat login bo‘lganlar ko‘radi --}}
+            <div class="mb-3">
+                <label class="form-label">Telefon raqami</label>
+                <input type="text" name="telefon_raqami" class="form-control" value="{{ old('telefon_raqami') }}" placeholder="+998">
+            </div>
 
-        <button type="submit">Saqlash</button>
-    </form>
+            <div class="mb-3">
+                <label class="form-label">Manzili</label>
+                <input type="text" name="mazili" class="form-control" value="{{ old('mazili') }}">
+            </div>
+            @endauth
+
+            <div class="mb-3">
+                <label class="form-label">Rasm (ixtiyoriy)</label>
+                <input type="file" name="rasmi" class="form-control">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Saqlash</button>
+        </form>
+    </div>
 @endsection
+
 
 <style>
     /* === Form Page Styling === */
@@ -37,7 +60,7 @@
         color: #c2185b;
         padding-top: 20px;
         margin-top: 80px;
-        font-size: 50px;
+        font-size: 2000px;
     }
 
     form {

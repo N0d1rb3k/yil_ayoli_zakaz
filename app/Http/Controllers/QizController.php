@@ -16,10 +16,12 @@ class QizController extends Controller
             ->when($search, function ($query, $search) {
                 $query->where('fio', 'like', "%{$search}%")
                     ->orWhere('sinfi', 'like', "%{$search}%")
-                    ->orWhere('yoshi', 'like', "%{$search}%");
+                    ->orWhere('yoshi', 'like', "%{$search}%")
+                    ->orWhere('telefon_raqami', 'like', "%{$search}%")
+                    ->orWhere('mazili', 'like', "%{$search}%");
             })
             ->orderBy('fio')
-            ->paginate(10); // optional pagination
+            ->paginate(10);
 
         return view('qizlar.index', compact('qizlar', 'search'));
     }
@@ -33,11 +35,11 @@ class QizController extends Controller
     {
         $data = $request->validate([
             'fio' => 'required|string|max:255',
-            'sinfi' => 'nullable|string|max:50',
-            // FIX 1: Added 'nullable'
-            'yoshi' => 'nullable|integer|max:50',
-            // FIX 2: Changed max:50 to max:255 for consistency and practicality
-            'rasmi' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
+            'yoshi' => 'nullable|integer|min:6|max:25',
+            'sinfi' => 'nullable|string|max:10',
+            'telefon_raqami' => 'nullable|string|max:20',
+            'mazili' => 'nullable|string|max:255',
+            'rasmi' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         if ($request->hasFile('rasmi')) {
@@ -46,10 +48,11 @@ class QizController extends Controller
 
         Qiz::create($data);
 
-        return redirect()->route('qizlar.index')->with('success', 'muvaffaqiyatli qo‘shildi!');
+        return redirect()->route('qizlar.index')->with('success', 'Muvaffaqiyatli qo‘shildi!');
     }
 
-    public function edit(Qiz $qiz){
+    public function edit(Qiz $qiz)
+    {
         return view('qizlar.edit', compact('qiz'));
     }
 
@@ -57,13 +60,14 @@ class QizController extends Controller
     {
         $data = $request->validate([
             'fio' => 'required|string|max:255',
-            'sinfi' => 'nullable|string|max:50',
-            'yoshi' => 'nullable|integer|max:50',
+            'yoshi' => 'nullable|integer|min:6|max:25',
+            'sinfi' => 'nullable|string|max:10',
+            'telefon_raqami' => 'nullable|string|max:20',
+            'mazili' => 'nullable|string|max:255',
             'rasmi' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
         if ($request->hasFile('rasmi')) {
-            // Delete old image if exists
             if ($qiz->rasmi && Storage::disk('public')->exists($qiz->rasmi)) {
                 Storage::disk('public')->delete($qiz->rasmi);
             }
@@ -75,10 +79,8 @@ class QizController extends Controller
         return redirect()->route('qizlar.index')->with('success', "{$qiz->fio} maʼlumotlari yangilandi!");
     }
 
-    // FIX 3: Added destroy method for deletion
     public function destroy(Qiz $qiz)
     {
-        // Delete image from storage
         if ($qiz->rasmi && Storage::disk('public')->exists($qiz->rasmi)) {
             Storage::disk('public')->delete($qiz->rasmi);
         }

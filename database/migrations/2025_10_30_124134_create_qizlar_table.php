@@ -16,6 +16,8 @@ return new class extends Migration
             $table->string('fio');
             $table->string('yoshi')->nullable();
             $table->string('sinfi')->nullable();
+            $table->string('telefon_raqami')->nullable();
+            $table->string('mazili')->nullable();
             $table->string('rasmi')->nullable();
             $table->timestamps();
         });
