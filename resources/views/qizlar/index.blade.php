@@ -6,8 +6,12 @@
 @section('content')
     <div class="qizlar-page">
         <h2>🌸 Qizlar ro‘yxati 🌸</h2>
+        <form method="GET" action="{{ route('qizlar.index') }}" class="mb-3 d-flex">
+            <input type="text" name="search" value="{{ $search ?? '' }}" class="form-control me-2" placeholder="Qizlarni qidirish...">
+            <button type="submit" class="btn btn-primary">Qidirish</button>
+        </form>
 
-        @if(session('success'))
+    @if(session('success'))
             <p class="success-message">{{ session('success') }}</p>
         @endif
 
@@ -19,12 +23,9 @@
                     @else
                         <img src="{{ asset('/images/default.jpg') }}" alt="No Image">
                     @endif
-
                     <h3><strong>FIO:</strong> {{ $qiz->fio }}</h3>
                     <p><strong>Sinf:</strong> {{ $qiz->sinfi }}</p>
                     <p><strong>Yoshi:</strong> {{ $qiz->yoshi }}</p>
-                    <p><strong>Yashash manzili:</strong> {{ $qiz->manzili }}</p>
-                    <p><strong>Ovozlar:</strong> {{ $qiz->ovoz }}</p>
                         @auth
                             <button type="button" class="edit-btn" onclick="window.location='{{ route('qizlar.edit', $qiz->id) }}'">
                                 Tahrirlash
@@ -75,9 +76,11 @@
     /* 🌸 Cards Container */
     .qizlar-list {
         display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+        grid-template-columns: repeat(auto-fill, 300px);
         gap: 1.5rem;
+        justify-content: center;
     }
+
 
     /* 🌸 Individual Card */
     .qiz-card {

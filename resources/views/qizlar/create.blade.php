@@ -14,9 +14,6 @@
         <label>Yosh:</label><br>
         <input type="text" name="yoshi"><br><br>
 
-        <label>Manzil:</label><br>
-        <input type="text" name="manzili" required><br><br>
-
         <label>Rasm:</label><br>
         <input type="file" name="rasmi"><br><br>
 

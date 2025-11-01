@@ -16,9 +16,6 @@
             <label>Yosh:</label><br>
             <input type="text" name="yoshi" value="{{ old('yoshi', $qiz->yoshi) }}"><br><br>
 
-            <label>Manzil:</label><br>
-            <input type="text" name="manzili" value="{{ old('manzili', $qiz->manzili) }}" required><br><br>
-
             <label>Rasm (agar o‘zgartirmoqchi bo‘lsangiz):</label><br>
             <input type="file" name="rasmi"><br><br>
 

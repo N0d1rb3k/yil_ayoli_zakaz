@@ -8,10 +8,20 @@ use Illuminate\Support\Facades\Storage;
 
 class QizController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $qizlar = Qiz::all();
-        return view('qizlar.index', compact('qizlar'));
+        $search = $request->input('search');
+
+        $qizlar = Qiz::query()
+            ->when($search, function ($query, $search) {
+                $query->where('fio', 'like', "%{$search}%")
+                    ->orWhere('sinfi', 'like', "%{$search}%")
+                    ->orWhere('yoshi', 'like', "%{$search}%");
+            })
+            ->orderBy('fio')
+            ->paginate(10); // optional pagination
+
+        return view('qizlar.index', compact('qizlar', 'search'));
     }
 
     public function create()
@@ -27,7 +37,6 @@ class QizController extends Controller
             // FIX 1: Added 'nullable'
             'yoshi' => 'nullable|integer|max:50',
             // FIX 2: Changed max:50 to max:255 for consistency and practicality
-            'manzili' => 'nullable|string|max:255',
             'rasmi' => 'nullable|image|mimes:jpg,png,jpeg|max:2048',
         ]);
 
@@ -50,7 +59,6 @@ class QizController extends Controller
             'fio' => 'required|string|max:255',
             'sinfi' => 'nullable|string|max:50',
             'yoshi' => 'nullable|integer|max:50',
-            'manzili' => 'nullable|string|max:255',
             'rasmi' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -64,7 +72,7 @@ class QizController extends Controller
 
         $qiz->update($data);
 
-        return redirect()->route('qizlar.index')->with('success', 'Qiz maʼlumotlari yangilandi!');
+        return redirect()->route('qizlar.index')->with('success', "{$qiz->fio} maʼlumotlari yangilandi!");
     }
 
     // FIX 3: Added destroy method for deletion
@@ -77,6 +85,6 @@ class QizController extends Controller
 
         $qiz->delete();
 
-        return redirect()->route('qizlar.index')->with('success', 'Maʼlumot muvaffaqiyatli o‘chirildi!');
+        return redirect()->route('qizlar.index')->with('success', "{$qiz->fio} muvaffaqiyatli o‘chirildi!");
     }
 }

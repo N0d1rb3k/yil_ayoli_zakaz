@@ -11,22 +11,23 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('qizlar', function (Blueprint $table) {
+        Schema::create('tadbirs', function (Blueprint $table) {
             $table->id();
-            $table->string('fio');
-            $table->string('yoshi')->nullable();
-            $table->string('sinfi')->nullable();
+            $table->string('nomi');
+            $table->date('sanasi');
+            $table->text('tavsifi')->nullable();
             $table->string('rasmi')->nullable();
+            $table->string('yonalishi')->nullable();
+            $table->string('tashkilotchi')->nullable();
             $table->timestamps();
         });
     }
-
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('qizs');
+        Schema::dropIfExists('tadbirs');
     }
 };
