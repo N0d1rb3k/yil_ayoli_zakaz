@@ -31,7 +31,7 @@
                     {{-- 🔐 Shaxsiy ma'lumotlar faqat auth foydalanuvchi uchun --}}
                     @auth
                         <p><strong>Telefon:</strong> {{ $qiz->telefon_raqami }}</p>
-                        <p><strong>Manzil:</strong> {{ $qiz->mazili }}</p>
+                        <p><strong>Manzil:</strong> {{ $qiz->manzili }}</p>
                     @endauth
 
                     @auth

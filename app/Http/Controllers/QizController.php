@@ -18,11 +18,9 @@ class QizController extends Controller
                     ->orWhere('sinfi', 'like', "%{$search}%")
                     ->orWhere('yoshi', 'like', "%{$search}%")
                     ->orWhere('telefon_raqami', 'like', "%{$search}%")
-                    ->orWhere('mazili', 'like', "%{$search}%");
+                    ->orWhere('manzili', 'like', "%{$search}%");
             })
-            ->orderBy('fio')
-            ->paginate(10);
-
+            ->orderBy('fio')->get();
         return view('qizlar.index', compact('qizlar', 'search'));
     }
 
@@ -38,7 +36,7 @@ class QizController extends Controller
             'yoshi' => 'nullable|integer|min:6|max:25',
             'sinfi' => 'nullable|string|max:10',
             'telefon_raqami' => 'nullable|string|max:20',
-            'mazili' => 'nullable|string|max:255',
+            'manzili' => 'nullable|string|max:255',
             'rasmi' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 
@@ -63,7 +61,7 @@ class QizController extends Controller
             'yoshi' => 'nullable|integer|min:6|max:25',
             'sinfi' => 'nullable|string|max:10',
             'telefon_raqami' => 'nullable|string|max:20',
-            'mazili' => 'nullable|string|max:255',
+            'manzili' => 'nullable|string|max:255',
             'rasmi' => 'nullable|image|mimes:jpg,jpeg,png|max:2048',
         ]);
 

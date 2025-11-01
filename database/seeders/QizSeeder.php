@@ -29,7 +29,7 @@ class QizSeeder extends Seeder
                 'yoshi' => $faker->numberBetween(10, 18),
                 'sinfi' => $faker->randomElement($sinflar),
                 'telefon_raqami' => '+9989' . $faker->numberBetween(10, 99) . $faker->numberBetween(1000000, 9999999),
-                'mazili' => $faker->address(),
+                'manzili' => $faker->address(),
                 'rasmi' => null,
                 'created_at' => now(),
                 'updated_at' => now(),

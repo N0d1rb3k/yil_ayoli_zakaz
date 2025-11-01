@@ -30,7 +30,7 @@
 
             <div class="mb-3">
                 <label class="form-label">Manzili</label>
-                <input type="text" name="mazili" class="form-control" value="{{ old('mazili') }}">
+                <input type="text" name="manzili" class="form-control" value="{{ old('manzili') }}">
             </div>
             @endauth
 

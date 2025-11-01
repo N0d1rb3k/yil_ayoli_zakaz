@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('yoshi')->nullable();
             $table->string('sinfi')->nullable();
             $table->string('telefon_raqami')->nullable();
-            $table->string('mazili')->nullable();
+            $table->string('manzili')->nullable();
             $table->string('rasmi')->nullable();
             $table->timestamps();
         });
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('qizs');
+        Schema::dropIfExists('qizlar');
     }
 };
