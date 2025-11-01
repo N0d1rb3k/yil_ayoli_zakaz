@@ -4,7 +4,11 @@
 
 @section('content')
     <h2 class="text-center mb-5 page-title">Tadbirlar ro‘yxati</h2>
-
+    @auth
+        <div class="text-center m-5 mb-8">
+            <a href="{{ route('tadbir.create') }}" class="btn btn-add-announcement">Yangi tadbir qo‘shish</a>
+        </div>
+    @endauth
     <div class="announcement-grid">
         @foreach($tadbirlar as $tadbir)
             <div class="news-card">
@@ -27,6 +31,7 @@
                     <p class="news-description">{{ Str::limit($tadbir->tavsifi, 100) }}</p>
 
                     <div class="news-actions">
+                        {{-- Tugmalar bir xil o'lchamda bo'lishi uchun, barchasi .news-actions .btn dan paddingni meros qilib oladi --}}
                         <a href="{{ route('tadbir.show', $tadbir->id) }}" class="btn btn-read-more">Batafsil</a>
                         @auth
                             <a href="{{ route('tadbir.edit', $tadbir->id) }}" class="btn btn-edit-small">Tahrirlash</a>
@@ -42,11 +47,9 @@
         @endforeach
     </div>
 
-    @auth
-        <div class="text-center mt-5">
-            <a href="{{ route('tadbir.create') }}" class="btn btn-add-announcement">Yangi tadbir qo‘shish</a>
-        </div>
-    @endauth
+
+
+
 @endsection
 
 <style>
@@ -60,7 +63,7 @@
     }
 
     .page-title {
-        font-family: 'Poppins', sans-serif;
+        font-family:  sans-serif;
         color: var(--news-pink-primary);
         font-weight: 700;
     }
@@ -90,8 +93,6 @@
         transition: transform 0.3s, box-shadow 0.3s;
         display: flex;
         flex-direction: column;
-        /* Height is now determined by content, no longer need fixed 100% since it's one column */
-        /* height: 100%; */
     }
 
     /* HOVER EFFECT: Lift the card slightly */
@@ -105,18 +106,15 @@
         position: relative;
     }
 
-    /* *** KEY CHANGE: Removed fixed height: 180px; *** */
     .news-img {
         width: 100%;
-        /* Removed height: 180px; - Now sized by background image or padding */
-        padding-bottom: 50%; /* Using a default aspect ratio (2:1) for demonstration if the background image doesn't define height */
+        padding-bottom: 50%;
         background-size: cover;
         background-position: center;
         border-bottom: 3px solid var(--news-pink-primary);
     }
 
     .news-img-placeholder {
-        /* Set a shorter, default height for the placeholder only */
         height: 120px;
         background-color: var(--news-pink-secondary);
         display: flex;
@@ -181,13 +179,14 @@
     .news-actions {
         display: flex;
         justify-content: flex-start;
+        align-items: center;
         gap: 0.8rem;
         margin-top: 1rem;
         flex-wrap: wrap;
     }
     .news-actions .btn {
         font-size: 0.85rem;
-        padding: 0.6rem 1.1rem;
+        padding: 0.6rem 1.1rem; /* Barcha tugmalar uchun asosiy padding */
         border-radius: 4px;
         font-weight: 600;
         text-decoration: none;
@@ -199,7 +198,7 @@
     .btn-read-more {
         background: var(--news-pink-primary);
         color: #fff;
-        border: 2px solid var(--news-pink-primary);
+        border: 1px solid var(--news-pink-primary);
     }
     .btn-read-more:hover { background: #A02251; border-color: #A02251; }
     .btn-edit-small {
@@ -212,6 +211,7 @@
         background: #DC3545;
         color: #fff;
         border: 1px solid #DC3545;
+        margin-top: 16px;
     }
     .btn-delete-small:hover { background: #B02A37; }
 
@@ -240,4 +240,6 @@
             width: 100%;
         }
     }
+
+
 </style>
