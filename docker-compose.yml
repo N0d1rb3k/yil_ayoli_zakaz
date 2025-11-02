@@ -1,0 +1,60 @@
+version: '3.8'
+services:
+  # PHP Service for artisan serve
+  php:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: php_dev
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "8000:8000"
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    command: php artisan serve --host=0.0.0.0 --port=8000
+    networks:
+      - app-network
+
+  # Node Service for npm run dev
+  node:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: node_dev
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "5173:5173"
+    working_dir: /var/www/html
+    volumes:
+      - ./:/var/www/html
+    command: npm run dev
+    networks:
+      - app-network
+
+  # MySQL Service
+  db:
+    image: mysql:8.0
+    container_name: db_dev
+    restart: unless-stopped
+    tty: true
+    ports:
+      - "3307:3306"
+    environment:
+      MYSQL_DATABASE: laravel_docker_dev
+      MYSQL_ROOT_PASSWORD: root
+    volumes:
+      - dbdata_dev:/var/lib/mysql
+    networks:
+      - app-network
+
+# Docker Networks
+networks:
+  app-network:
+    driver: bridge
+# Volumes
+volumes:
+  dbdata_dev:
+    driver: local
