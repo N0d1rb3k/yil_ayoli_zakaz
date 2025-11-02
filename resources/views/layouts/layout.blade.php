@@ -18,6 +18,7 @@
         <a href="{{ route('home') }}">Bosh sahifa</a>
         <a href="{{ route('qizlar.index') }}">Qizlar</a>
         <a href="{{ route('tadbir.index') }}">Tadbirlar</a>
+        <a href="#" onclick="event.preventDefault(); document.getElementById('groups-modal').style.display='flex';">Guruhlar</a>
         <a href="{{ route('aloqa') }}">Aloqa</a>
         @guest
             <a href="{{ route('login') }}"
@@ -41,8 +42,11 @@
     @endauth
 </nav>
     @yield('content')
+    
+    @include('groups.index_modal')
+    
 <footer>
-    <p>© 2025 “Yil Ayoli” loyihasi. Barcha huquqlar himoyalangan.</p>
+    <p>© 2025 "Yil Ayoli" loyihasi. Barcha huquqlar himoyalangan.</p>
 </footer>
 </body>
 </html>
