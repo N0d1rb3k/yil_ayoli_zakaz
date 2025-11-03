@@ -100,6 +100,27 @@ class GroupController extends Controller
     }
 
     /**
+     * Guruhdan qizni olib tashlaydi (pivot detach)
+     */
+    public function removeQiz(Group $group, Qiz $qiz)
+    {
+        $group->qizlar()->detach($qiz->id);
+
+        if (request()->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => "{$qiz->fio} guruhdan olib tashlandi",
+                'data' => [
+                    'group' => $group->load('qizlar'),
+                    'qiz' => $qiz,
+                ],
+            ]);
+        }
+
+        return redirect()->back()->with('success', "{$qiz->fio} guruhdan olib tashlandi");
+    }
+
+    /**
      * Guruhni yangilaydi
      */
     public function update(Request $request, Group $group)

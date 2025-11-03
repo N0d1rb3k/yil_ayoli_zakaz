@@ -46,6 +46,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/groups/qizlar-for-add', [GroupController::class, 'getQizlarForAdd'])->name('groups.qizlar-for-add');
     Route::post('/groups/{group}/add-qiz/{qiz}', [GroupController::class, 'addQiz'])->name('groups.add-qiz');
     Route::get('/groups/{group}/qizlar', [GroupController::class, 'getQizlar'])->name('groups.qizlar');
+    Route::delete('/groups/{group}/remove-qiz/{qiz}', [GroupController::class, 'removeQiz'])->name('groups.remove-qiz');
 });
 
 require __DIR__.'/auth.php';

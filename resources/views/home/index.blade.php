@@ -25,7 +25,6 @@
         </p>
 
         <div>
-            <a href="#">Nomzodlarni ko‘rish →</a>
         </div>
     </section>
 

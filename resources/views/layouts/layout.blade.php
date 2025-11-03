@@ -15,32 +15,37 @@
 <body>
 
 <nav>
-        <a href="{{ route('home') }}">Bosh sahifa</a>
-        <a href="{{ route('qizlar.index') }}">Qizlar</a>
-        <a href="{{ route('tadbir.index') }}">Tadbirlar</a>
-        <a href="#" onclick="event.preventDefault(); document.getElementById('groups-modal').style.display='flex';">Guruhlar</a>
-        <a href="{{ route('aloqa') }}">Aloqa</a>
-        @guest
-            <a href="{{ route('login') }}"
-               class="text-blue-600 hover:text-blue-800 font-semibold">
-                Kirish
-            </a>
-        @endguest
-        @auth
-            <a href="{{ route('qizlar.create') }}">Ro'yxatga olish</a>
-        <a href="#"
-           onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
-           class="font-bold text-pink-800 hover:underline hover:text-pink-900 transition">
-            Chiqish
-        </a>
+        <div class="nav-inner">
+            <a href="{{ route('home') }}" class="nav-brand">Yil Ayoli</a>
+            <input type="checkbox" id="nav-toggle" class="nav-toggle" aria-label="Toggle navigation">
+            <label for="nav-toggle" class="nav-toggle-btn" aria-hidden="true">
+                <span></span>
+                <span></span>
+                <span></span>
+            </label>
 
-        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
-            @csrf
-        </form>
+            <div class="nav-links">
+                <a href="{{ route('home') }}">Bosh sahifa</a>
+                <a href="{{ route('qizlar.index') }}">Qizlar</a>
+                <a href="{{ route('tadbir.index') }}">Tadbirlar</a>
+                <a href="#" onclick="event.preventDefault(); document.getElementById('groups-modal').style.display='flex';">Guruhlar</a>
+                <a href="{{ route('aloqa') }}">Aloqa</a>
+                @guest
+                    <a href="{{ route('login') }}" class="text-blue-600 hover:text-blue-800 font-semibold">Kirish</a>
+                @endguest
+                @auth
+                    <a href="{{ route('qizlar.create') }}">Ro'yxatga olish</a>
+                    <a href="#"
+                       onclick="event.preventDefault(); document.getElementById('logout-form').submit();"
+                       class="font-bold text-pink-800 hover:underline hover:text-pink-900 transition">Chiqish</a>
 
-
-    @endauth
-</nav>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" class="hidden">
+                        @csrf
+                    </form>
+                @endauth
+            </div>
+        </div>
+    </nav>
     @yield('content')
     
     @include('groups.index_modal')

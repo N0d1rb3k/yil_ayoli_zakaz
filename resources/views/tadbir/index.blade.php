@@ -232,12 +232,28 @@
 
     /* Responsive adjustments */
     @media (max-width: 576px) {
+        .page-title {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
         .news-actions {
             flex-direction: column;
             gap: 0.5rem;
         }
         .news-actions .btn {
             width: 100%;
+        }
+
+        .news-meta {
+            padding: 8px 14px 8px 18px;
+            font-size: 0.7rem;
+        }
+        .meta-date {
+            font-size: 0.9rem;
+        }
+        .news-body {
+            padding: 1rem;
         }
     }
 

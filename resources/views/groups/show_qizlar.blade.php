@@ -37,6 +37,11 @@
                     @auth
                         <p class="qiz-detail"><strong>Telefon:</strong> {{ $qiz->telefon_raqami ?? 'N/A' }}</p>
                         <p class="qiz-detail"><strong>Manzil:</strong> {{ $qiz->manzili ?? 'N/A' }}</p>
+                        <form action="{{ route('groups.remove-qiz', [$group->id, $qiz->id]) }}" method="POST" class="remove-qiz-form" onsubmit="return confirm('"{{ $qiz->fio }}" guruhdan o\'chirilsinmi?');">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn-remove-qiz">Guruhdan o'chirish</button>
+                        </form>
                     @endauth
                 </div>
             </div>
@@ -192,6 +197,23 @@ document.addEventListener('DOMContentLoaded', function() {
     margin-bottom: 2rem;
 }
 
+.remove-qiz-form {
+    margin-top: 0.75rem;
+}
+.btn-remove-qiz {
+    display: inline-block;
+    background: #DC3545;
+    color: #fff;
+    border: 1px solid #DC3545;
+    border-radius: 8px;
+    padding: 0.5rem 0.9rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s ease, transform 0.1s ease;
+}
+.btn-remove-qiz:hover { background: #B02A37; }
+.btn-remove-qiz:active { transform: translateY(1px); }
+
 .page-title {
     color: #b31f6f;
     font-size: 2.5rem;
@@ -230,6 +252,7 @@ document.addEventListener('DOMContentLoaded', function() {
     grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
     gap: 1.5rem;
     margin-top: 2rem;
+    align-items: stretch;
 }
 
 .qiz-card {
@@ -238,6 +261,9 @@ document.addEventListener('DOMContentLoaded', function() {
     box-shadow: 0 4px 15px rgba(139, 0, 93, 0.08);
     overflow: hidden;
     transition: transform 0.25s ease, box-shadow 0.25s ease;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
 }
 
 .qiz-card:hover {
@@ -253,6 +279,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
 .qiz-info {
     padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 .qiz-name {
@@ -341,6 +370,13 @@ document.addEventListener('DOMContentLoaded', function() {
 
     .page-title {
         font-size: 2rem;
+    }
+}
+
+/* Force exactly 3 cards per row on large screens and equal heights */
+@media (min-width: 992px) {
+    .qizlar-grid {
+        grid-template-columns: repeat(3, 1fr);
     }
 }
 </style>
