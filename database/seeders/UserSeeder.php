@@ -21,12 +21,5 @@ class UserSeeder extends Seeder
             'password'=>bcrypt('Nodirbek7566'),
         ]);
 
-        Qiz::firstOrCreate(
-            ['fio' => 'Murodova Mushtariy',
-             'sinfi' => 11,
-             'yoshi' => 18,
-                'rasmi' => 'qizlar/TD4iHVyMwapbfPkFdnHIMZRW2uY1kU5Zf062Ozn0.jpg']
-        );
-
     }
 }
