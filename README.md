@@ -57,3 +57,61 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## Production Deployment (Docker)
+
+Follow these steps to run this app in production with Nginx + PHP-FPM:
+
+1) Create your environment file `.env` (example values below). Ensure `APP_ENV=production`, `APP_DEBUG=false`.
+
+```
+APP_NAME="Yil Ayoli"
+APP_ENV=production
+APP_KEY=
+APP_DEBUG=false
+APP_URL=http://localhost
+
+LOG_CHANNEL=stack
+LOG_LEVEL=info
+
+DB_CONNECTION=mysql
+DB_HOST=db
+DB_PORT=3306
+DB_DATABASE=yil_ayoli
+DB_USERNAME=laravel
+DB_PASSWORD=secret
+
+CACHE_DRIVER=file
+FILESYSTEM_DISK=public
+QUEUE_CONNECTION=sync
+SESSION_DRIVER=file
+SESSION_LIFETIME=120
+
+MAIL_MAILER=smtp
+MAIL_HOST=mailpit
+MAIL_PORT=1025
+MAIL_USERNAME=null
+MAIL_PASSWORD=null
+MAIL_ENCRYPTION=null
+MAIL_FROM_ADDRESS="no-reply@example.com"
+MAIL_FROM_NAME="${APP_NAME}"
+```
+
+2) Build and start the production stack:
+
+```
+docker compose -f docker-compose.prod.yml build
+docker compose -f docker-compose.prod.yml up -d
+```
+
+3) Run one-time app setup inside the `app` container:
+
+```
+docker compose -f docker-compose.prod.yml exec app php artisan key:generate
+docker compose -f docker-compose.prod.yml exec app php artisan migrate --force
+```
+
+Notes:
+- App is served by Nginx on port 80, proxying to PHP-FPM (port 9000).
+- Built assets are generated during image build; re-build the image after front-end changes.
+- Storage symlink and Laravel caches are warmed during the image build.
