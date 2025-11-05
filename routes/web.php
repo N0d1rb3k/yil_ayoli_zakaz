@@ -30,6 +30,16 @@ Route::get('/groups/{group}/show-qizlar', [GroupController::class, 'showQizlar']
 // Public groups index route (guestlar guruhlarni ko'ra oladi)
 Route::get('/groups', [GroupController::class, 'index'])->name('groups.index');
 
+use Spatie\Sitemap\SitemapGenerator;
+
+Route::get('/generate-sitemap', function () {
+    SitemapGenerator::create(config('app.url'))
+        ->writeToFile(public_path('sitemap.xml'));
+
+    return 'Sitemap generated!';
+});
+
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
